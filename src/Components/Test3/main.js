@@ -16,17 +16,30 @@ export default function Test3() {
   const [used, setUsed] = useState(() => {
     return false;
   });
+  const flagHandler = new FlagHandler();
 
   const onSave = () => {
     // use FlagHandler to save the label and value to localStorage
+    flagHandler.setFlag(label, value);
+    clearInputs();
   };
 
   const printLabel = () => {
     // alert/print the value of the current label
+    const item = flagHandler.getValue(label);
+    alert(item);
+    console.log(label);
   };
 
   const onDelete = () => {
-    // handle delete
+    flagHandler.deleteValue(label);
+    clearInputs();
+  };
+
+  const clearInputs = () => {
+    setValue("");
+    setLabel("");
+    setUsed(false);
   };
 
   return (
@@ -47,7 +60,10 @@ export default function Test3() {
           <input
             type="text"
             value={label}
-            onChange={e => setLabel(e.target.value)}
+            onChange={e => {
+              setUsed(!!flagHandler.isSet(e.target.value));
+              setLabel(e.target.value);
+            }}
           />
         </div>
 
@@ -88,6 +104,7 @@ export default function Test3() {
         </button>
 
         <button
+          disabled={!flagHandler.isSet(label)}
           style={{
             marginBottom: "0.8rem"
           }}

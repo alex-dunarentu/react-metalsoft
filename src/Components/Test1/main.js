@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Wrapper1 from "./Wrapper1";
 
 // hints:
@@ -32,13 +32,16 @@ import Wrapper1 from "./Wrapper1";
 // exmaple: ref.current.setValue("working")
 
 export default function Test1() {
+  const myRef = useRef(null);
   const onClick = () => {
     // this function should change the value of the inner input
     // do not pass the desired value as a prop to the input. Edit Wrapper1 and Wrapper2 to allow this behaviour.
+    myRef.current.value = "working";
   };
 
   const onClickAlert = () => {
     // this function should print the value of the input using window.alert
+    window.alert(`value is = ${myRef.current.value}`);
   };
 
   return (
@@ -71,7 +74,7 @@ export default function Test1() {
         {"Alert the value"}
       </button>
 
-      <Wrapper1 />
+      <Wrapper1 ref={myRef} />
     </div>
   );
 }

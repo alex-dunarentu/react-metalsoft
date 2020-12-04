@@ -1,6 +1,6 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
-export default function Wrapper2() {
+const Wrapper2 = (props, ref) => {
   return (
     <div
       style={{
@@ -13,11 +13,13 @@ export default function Wrapper2() {
       <br />
 
       <input
-        value="change this value from the main file."
+        placeholder="Please insert text ..."
+        ref={ref}
         style={{
           width: "100%"
         }}
       />
     </div>
   );
-}
+};
+export default forwardRef(Wrapper2);

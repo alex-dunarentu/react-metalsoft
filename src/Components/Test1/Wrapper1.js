@@ -1,7 +1,7 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import Wrapper2 from "./Wrapper2";
 
-export default function Wrapper1() {
+const Wrapper1 = (props, ref) => {
   return (
     <div
       style={{
@@ -10,7 +10,8 @@ export default function Wrapper1() {
       }}
     >
       <span>{"Wrapper1"}</span>
-      <Wrapper2 />
+      <Wrapper2 ref={ref} />
     </div>
   );
-}
+};
+export default forwardRef(Wrapper1);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import List from "./List";
-
+import "./style";
 // hints:
 // https://reactjs.org/docs/hooks-reference.html#usestate
 // https://reactjs.org/docs/hooks-reference.html#usememo
@@ -25,30 +25,53 @@ import List from "./List";
 export default function Test2() {
   const [lastIndex, setLastIndex] = useState(6);
   const [elements, setElements] = useState(() => [
-    "list_element_1",
-    "list_ELEment_2",
-    "list_elemeNT_3",
-    "list_eleMent_4",
-    "list_eLement_5",
-    "list_element_6"
+    { id: "list_element_1", isChecked: false },
+    { id: "list_ELEment_2", isChecked: false },
+    { id: "list_elemeNT_3", isChecked: false },
+    { id: "list_eleMent_4", isChecked: false },
+    { id: "list_eLement_5", isChecked: false },
+    { id: "list_element_6", isChecked: false }
   ]);
-
   const onClickPrint = () => {
     // this function should receive the selected values and print them to the console.
+    console.log(elements);
   };
 
   const onClickSelectAll = () => {
     // this function should select all values
-    console.log("test");
+    const newElements = elements.map(el => {
+      el.isChecked = true;
+      return el;
+    });
+    setElements(newElements);
   };
 
   const onClickDselectAll = () => {
     // this function should deselect all values
+    const newElements = elements.map(el => {
+      el.isChecked = false;
+      return el;
+    });
+    setElements(newElements);
   };
 
   const onClickNewEntry = () => {
     // this function should add a new entry
     // list_element_7, list_element_8, etc.
+    setElements(() => [
+      ...elements,
+      { id: `list_element_${elements.length + 1}`, isChecked: false }
+    ]);
+  };
+
+  const updateElement = elementId => {
+    const newElements = elements.map(e => {
+      if (e.id === elementId) {
+        e.isChecked = !e.isChecked;
+      }
+      return e;
+    });
+    setElements(newElements);
   };
 
   return (
@@ -62,43 +85,44 @@ export default function Test2() {
 
         <br />
 
-        <List items={elements} />
+        <List items={elements} toggleItem={updateElement} />
+        <div className="ButtonsWrapper">
+          <button
+            onClick={onClickPrint}
+            style={{
+              marginTop: "0.8rem"
+            }}
+          >
+            {"Print the selected elements (array) to console."}
+          </button>
 
-        <button
-          onClick={onClickPrint}
-          style={{
-            marginTop: "0.8rem"
-          }}
-        >
-          {"Print the selected elements (array) to console."}
-        </button>
+          <button
+            onClick={onClickSelectAll}
+            style={{
+              marginTop: "0.8rem"
+            }}
+          >
+            {"Select all."}
+          </button>
 
-        <button
-          onClick={onClickSelectAll}
-          style={{
-            marginTop: "0.8rem"
-          }}
-        >
-          {"Select all."}
-        </button>
+          <button
+            onClick={onClickDselectAll}
+            style={{
+              marginTop: "0.8rem"
+            }}
+          >
+            {"Deselect all."}
+          </button>
 
-        <button
-          onClick={onClickDselectAll}
-          style={{
-            marginTop: "0.8rem"
-          }}
-        >
-          {"Deselect all."}
-        </button>
-
-        <button
-          onClick={onClickNewEntry}
-          style={{
-            marginTop: "0.8rem"
-          }}
-        >
-          {"Add a new entry."}
-        </button>
+          <button
+            onClick={onClickNewEntry}
+            style={{
+              marginTop: "0.8rem"
+            }}
+          >
+            {"Add a new entry."}
+          </button>
+        </div>
       </div>
     </div>
   );
