@@ -3,7 +3,8 @@ import List from "./List";
 
 export default function List({ items = null, toggleItem }) {
   const formatText = text => {
-    return text;
+    const regex = /_/gi;
+    return text.toLowerCase().replace(regex,' ');
   };
   return (
     <div>
